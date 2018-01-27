@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
+    <script type="text/javascript" src="ui/jquery.min.js"></script>
+    <script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
+</head>
+<body>
+    <form id="searchForm">
+        部门名称:<input name="dep1.name">
+        部门电话:<input name="dep1.tele">&nbsp;&nbsp;&nbsp;
+        <button id="btnSearch" type="button">查询</button>
+    </form>
+    <table id="grid"></table>
+</body>
+    <script>
+        /*************入口函数**************/
+        $(function () {
+            $('#grid').datagrid({
+                url:'dep_listByPage.action',
+                columns:[[
+                    {field:'uuid',title:'部门编号',width:100},
+                    {field:'name',title:'部门名称',width:100},
+                    {field:'tele',title:'部门电话',width:100,align:'right'},
+                    {field:'a',title:'操作',width:100,formatter: function(value,row,index){
+                        var operation = '<a href="javascript:void(0);" onclick="edit(' + row.uuid + ')">修改</a>';
+                        operation += ' <a href="javascript:void(0);" onclick="del(' + row.uuid + ')">删除</a>'
+                        return operation;
+                    }}
+                ]],
+                singleSelect:true,
+                pagination:true,
+                pageSize:10,
+                pageList:[5,10,15,20]
+            });
+        })
+        /*************入口函数**************/
+        /**查询函数*/
+        $('#btnSearch').bind('click',function () {
+            var searchData = $('#searchForm').serializeJSON();
+            $('#grid').datagrid('load',searchData);
+        })
+    </script>
+</html>
