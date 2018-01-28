@@ -39,5 +39,10 @@ public class DepServiceImpl implements DepService {
         return depDao.get(uuid);
     }
 
+    @Override
+    public void update(Dep dep1) {
+        depDao.update(dep1);
+    }
+
 
 }

@@ -46,6 +46,12 @@ public class DepDaoImpl extends BaseDaoImpl implements DepDao{
         return hibernateTemplate.get(Dep.class,uuid);
     }
 
+    @Override
+    public void update(Dep dep1) {
+        hibernateTemplate.update(dep1);
+    }
+
+
     /**
      * 离线查询对象
      * @param dep1

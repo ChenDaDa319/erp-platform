@@ -42,4 +42,6 @@ public interface DepDao {
      * @param uuid
      */
     Dep get(Long uuid);
+
+    void update(Dep dep1);
 }

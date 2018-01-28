@@ -15,4 +15,6 @@ public interface DepService {
     void add(Dep dep1);
 
     Dep get(Long uuid);
+
+    void update(Dep dep1);
 }

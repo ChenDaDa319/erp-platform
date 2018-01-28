@@ -75,6 +75,17 @@ public class DepAction {
     @Autowired
     private DepService depService;
 
+    public void update(){
+        try {
+
+            depService.update(dep1);
+            ajaxReturn(true,"修改成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxReturn(false,"修改失败");
+        }
+    }
+
     /**
      * 根据id查询
      */
@@ -141,6 +152,20 @@ public class DepAction {
     }
 
     /**
+     * 把mapJson响应给页面
+     * @param mapJson
+     */
+    public void write(String mapJson){
+        HttpServletResponse response = ServletActionContext.getResponse();
+        response.setCharacterEncoding("utf-8");
+        try {
+            response.getWriter().write(mapJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+    /**
      * 给页面相面ajax数据
      * @param success
      * @param message
@@ -154,23 +179,13 @@ public class DepAction {
 
     private String mapJson(Object object) {
         String jsonString = JSON.toJSONString(object);
-        //System.out.println("jsonString====" + jsonString);
         Map<String, Object> map = JSON.parseObject(jsonString);
-        //System.out.println("map====" + map);
 
         HashMap<String, Object> newMap = new HashMap<>();
         for (String key : map.keySet()) {
             newMap.put("dep1"+"."+key,map.get(key));
         }
-        //System.out.println("newMap"+newMap);
         return JSON.toJSONString(newMap);
     }
 
-    /*public static void main(String[] args) {
-        Dep dep = new Dep();
-        dep.setUuid(1223l);
-        dep.setName("zsss");
-        dep.setTele("8877");
-        mapJson(dep);
-    }*/
 }

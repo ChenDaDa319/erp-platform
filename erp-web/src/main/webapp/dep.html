@@ -29,6 +29,7 @@
 </div>
 </body>
 <script>
+    var method = "";
     /*************入口函数**************/
     $(function () {
         $('#grid').datagrid({
@@ -53,6 +54,7 @@
                 iconCls: 'icon-add',
                 text: '增加',
                 handler: function () {
+                    method= "add";
                     $('#editDlg').window('open');
                 }
             }]
@@ -70,7 +72,7 @@
                 handler: function () {
                     var editData = $('#editForm').serializeJSON();
                     $.ajax({
-                        url: 'dep_add.action',
+                        url: "dep_"+method+".action",
                         data: editData,
                         dataType: 'json',//把响应回来的内容(一般是字符串)转成json对象
                         type: 'post',//post/get
@@ -119,7 +121,6 @@
                                 //成功时
                                 //重新加载表格数据
                                 $('#grid').datagrid('reload');
-                                console.log("sb");
                             }
                         });
                     }
@@ -127,7 +128,7 @@
             }
         });
     }
-    /** 编辑部门函数*/
+    /** 编辑部门信息函数*/
     function edit(uuid) {
         /**编辑前要先根据id查询数据*/
         $('#editDlg').window('open');
@@ -135,6 +136,8 @@
         $('#editForm').form('clear');
         /**根据id先加载数据*/
         $('#editForm').form('load','dep_get.action?uuid='+uuid);
+        /** 将按钮方法修改为update*/
+        method = "update";
     }
 </script>
 </html>
