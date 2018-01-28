@@ -29,6 +29,23 @@ public class DepDaoImpl extends BaseDaoImpl implements DepDao{
         return list;
     }
 
+    @Override
+    public void deleteById(Long uuid) {
+        Dep dep = new Dep();
+        dep.setUuid(uuid);
+        hibernateTemplate.delete(dep);
+    }
+
+    @Override
+    public void add(Dep dep1) {
+        hibernateTemplate.save(dep1);
+    }
+
+    @Override
+    public Dep get(Long uuid) {
+        return hibernateTemplate.get(Dep.class,uuid);
+    }
+
     /**
      * 离线查询对象
      * @param dep1

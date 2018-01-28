@@ -25,4 +25,21 @@ public interface DepDao {
      */
     List<Dep> listByPage(Dep dep1,Dep dep2,Object param,int start,int rows);
 
+    /**
+     * 根据id删除信息
+     * @param uuid
+     */
+    void deleteById(Long uuid);
+
+    /**
+     * 增加数据
+     * @param dep1
+     */
+    void add(Dep dep1);
+
+    /**
+     * 根据id获取数据
+     * @param uuid
+     */
+    Dep get(Long uuid);
 }

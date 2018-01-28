@@ -24,5 +24,20 @@ public class DepServiceImpl implements DepService {
         return depDao.listByPage(dep1,dep2,param,start,rows);
     }
 
+    @Override
+    public void deleteById(Long uuid) {
+        depDao.deleteById(uuid);
+    }
+
+    @Override
+    public void add(Dep dep1) {
+        depDao.add(dep1);
+    }
+
+    @Override
+    public Dep get(Long uuid) {
+        return depDao.get(uuid);
+    }
+
 
 }

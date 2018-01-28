@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class DepAction {
@@ -21,6 +22,15 @@ public class DepAction {
 
     private int page;
     private int rows;
+    private Long uuid;
+
+    public Long getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(Long uuid) {
+        this.uuid = uuid;
+    }
 
     public int getRows() {
         return rows;
@@ -66,6 +76,41 @@ public class DepAction {
     private DepService depService;
 
     /**
+     * 根据id查询
+     */
+    public void get(){
+        Dep editDep = depService.get(uuid);
+        //将editDep转成加了前缀的json字符串
+        write(mapJson(editDep));
+    }
+
+
+    /**
+     * 增加数据
+     */
+    public void add(){
+        try {
+            depService.add(dep1);
+            ajaxReturn(true,"增加成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxReturn(false,"增加失败");
+        }
+    }
+    /**
+     * 根据uuid删除数据
+     */
+    public void del(){
+        try {
+            depService.deleteById(uuid);
+            ajaxReturn(true,"删除成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxReturn(false,"删除失败");
+        }
+    }
+
+    /**
      * 分页查询
      */
     public void listByPage(){
@@ -94,4 +139,38 @@ public class DepAction {
             
         }
     }
+
+    /**
+     * 给页面相面ajax数据
+     * @param success
+     * @param message
+     */
+    private void ajaxReturn(boolean success,String message){
+        HashMap<String, Object> rtn = new HashMap<>();
+        rtn.put("success",success);
+        rtn.put("message",message);
+        write(rtn);
+    }
+
+    private String mapJson(Object object) {
+        String jsonString = JSON.toJSONString(object);
+        //System.out.println("jsonString====" + jsonString);
+        Map<String, Object> map = JSON.parseObject(jsonString);
+        //System.out.println("map====" + map);
+
+        HashMap<String, Object> newMap = new HashMap<>();
+        for (String key : map.keySet()) {
+            newMap.put("dep1"+"."+key,map.get(key));
+        }
+        //System.out.println("newMap"+newMap);
+        return JSON.toJSONString(newMap);
+    }
+
+    /*public static void main(String[] args) {
+        Dep dep = new Dep();
+        dep.setUuid(1223l);
+        dep.setName("zsss");
+        dep.setTele("8877");
+        mapJson(dep);
+    }*/
 }
