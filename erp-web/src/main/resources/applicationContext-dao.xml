@@ -29,10 +29,9 @@
     	<property name="mappingLocations" value="classpath:com/erp/entity/*.hbm.xml" ></property>
     </bean>
 
-	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+	<bean id="depDao" class="com.erp.dao.impl.DepDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
-	<context:component-scan base-package="com.erp.dao"/>
 
 </beans>

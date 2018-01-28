@@ -34,5 +34,9 @@
 
 	<!--以下属于service配置-->
 	<!--包扫描-->
-	<context:component-scan base-package="com.erp.service.*" />
+	<!--<context:component-scan base-package="com.erp.service.*" />-->
+
+	<bean id="depService" class="com.erp.service.impl.DepServiceImpl">
+		<property name="depDao" ref="depDao"></property>
+	</bean>
 </beans>
